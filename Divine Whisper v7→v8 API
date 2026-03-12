@@ -1,0 +1,50 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from divine_whisper.orchestrator import Orchestrator
+from tensor_field import MuTensorField
+from bridge_v7_v8 import V7V8Bridge
+import torch
+import time
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+)
+
+orch = Orchestrator()
+field = MuTensorField(dim=128)
+bridge = V7V8Bridge(field)
+
+history = []
+
+@app.post("/run")
+
+def run_task(task:str):
+
+    result = orch.run(task)
+
+    bridge_signal = bridge.translate(result["council"])
+
+    bridge.inject(bridge_signal)
+
+    snapshot = field.field.cpu().tolist()
+
+    entry = {
+        "task":task,
+        "result":result,
+        "field":snapshot,
+        "time":time.time()
+    }
+
+    history.append(entry)
+
+    return entry
+
+
+@app.get("/history")
+
+def get_history():
+    return history
