@@ -1,3 +1,6 @@
+> [!NOTE]
+> **Divine Whisper lineage repository.** This is a preserved experimental stage or supporting component. Start with the [canonical ecosystem index](https://github.com/aruintelligence/divine-whisper-ecosystem) for the complete version map, current context, and research-scope notice.
+
 <button onclick="navigator.clipboard.writeText(document.getElementById('api-readme').innerText)">Copy Full README.md</button>
 
 <div id="api-readme" style="white-space: pre-wrap; font-family: monospace; max-height: 400px; overflow-y: auto; padding: 16px; border: 1px solid #444; border-radius: 8px; background: #0d1117; color: #e6edf3;">
